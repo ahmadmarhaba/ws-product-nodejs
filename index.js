@@ -1,17 +1,17 @@
+const {PGHOST , PGUSER,PGDATABASE,PGPASSWORD,PGPORT,PORT}= process.env;
 const express = require('express')
 const pg = require('pg')
-
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 // configs come from standard PostgreSQL env vars
 // https://www.postgresql.org/docs/9.6/static/libpq-envars.html
 const pool = new pg.Pool({
-  host: process.env.PGHOST,// <ignore scan-env>
-  user: process.env.PGUSER,// <ignore scan-env>
-  database : process.env.PGDATABASE,// <ignore scan-env>
-  password : process.env.PGPASSWORD,// <ignore scan-env>
-  port : process.env.PGPORT,// <ignore scan-env>
+  host: PGHOST,
+  user: PGUSER,
+  database : PGDATABASE,
+  password : PGPASSWORD,
+  port : PGPORT || null,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 2000,
   allowExitOnIdle : true
@@ -80,12 +80,12 @@ app.get('/poi', (req, res, next) => {
   return next()
 }, queryHandler)
 
-app.listen(process.env.PORT || 5555, (err) => {// <ignore scan-env>
+app.listen(PORT || 5555, (err) => {
   if (err) {
     console.error(err)
     process.exit(1)
   } else {
-    console.log(`Running on ${process.env.PORT || 5555}`)// <ignore scan-env>
+    console.log(`Running on ${PORT || 5555}`)
   }
 })
 
