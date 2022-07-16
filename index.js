@@ -1,3 +1,4 @@
+require('dotenv').config()
 const {PGHOST , PGUSER,PGDATABASE,PGPASSWORD,PGPORT,PORT}= process.env;
 const express = require('express')
 const pg = require('pg')
