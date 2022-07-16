@@ -6,19 +6,17 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
+    "build": "echo \"Error: no build specified\" && exit 1",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ."
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/EQWorks/ws-product-nodejs.git"
+    "url": "git+https://github.com/ahmadmarhaba/ws-product-nodejs.git"
   },
   "author": "woozyking",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/EQWorks/ws-product-nodejs/issues"
-  },
-  "homepage": "https://github.com/EQWorks/ws-product-nodejs#readme",
+  "homepage": "https://github.com/ahmadmarhaba/ws-product-nodejs#readme",
   "dependencies": {
     "dotenv": "^16.0.1",
     "express": "^4.17.1",
