@@ -9,44 +9,44 @@ on:
       - main
 
 jobs:
-  # lint:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
-  #     - name: Set Node.js version
-  #       uses: actions/setup-node@v2
-  #       with:
-  #         node-version: '14.x'
+      - name: Set Node.js version
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
 
-  #     - run: npm i
-  #     - run: npm run lint
+      - run: npm i
+      - run: npm run lint
 
-  # commit-watch:
-  #   runs-on: ubuntu-latest
-  #   if: contains(github.event_name, 'pull_request')
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #       with:
-  #         fetch-depth: 0
+  commit-watch:
+    runs-on: ubuntu-latest
+    if: contains(github.event_name, 'pull_request')
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
-  #     - uses: actions/setup-node@v2
-  #       with:
-  #         node-version: 14.x
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
 
-  #     - run: npx @eqworks/commit-watch -b ${{ github.event.pull_request.base.sha }} -h ${{ github.event.pull_request.head.sha }} -v
+      - run: npx @eqworks/commit-watch -b ${{ github.event.pull_request.base.sha }} -h ${{ github.event.pull_request.head.sha }} -v
 
-  # scan-env:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
+  scan-env:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
 
-  #     - uses: actions/setup-node@v2
-  #       with:
-  #         node-version: 14.x
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
 
-  #     - run: npx @eqworks/scan-env --strict
+      - run: npx @eqworks/scan-env --strict
 
   # This workflow contains multiple jobs
   build_test:
