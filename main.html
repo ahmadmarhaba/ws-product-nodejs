@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+<script src='https://www.gstatic.com/charts/loader.js'></script>
+  </head>
+<body>
+  <h1>
+    One
+  </h1>
+<div>
+  <canvas id="myChart"></canvas>
+</div>
+  <br />  <h1>
+    Two
+  </h1> <br />
+<table id="dataTable" class="display">
+     <thead>
+        <tr>
+            <th>Lat</th>
+            <th>Lon</th>
+          <th>Name</th>
+          <th>Poi_id</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>  <br />  <h1>
+    Three
+  </h1> <br />
+  <div id="chart_div" style="width: 900px; height: 500px;"></div>
+<br /> <br />
+  <script>
+
+    // Making our request 
+    fetch('/events/daily', { method: 'GET' })
+        .then(Result => Result.json())
+        .then(dataD => { visualPresentation(dataD); })
+        .catch(errorMsg => { console.error(errorMsg); });
+    
+    fetch('/poi', { method: 'GET' })
+        .then(Result => Result.json())
+        .then(dataD => { dataTablePresentation(dataD); 
+                        dataMapVisualization(dataD);
+                       })
+        .catch(errorMsg => { console.error(errorMsg); });
+    
+  function dataMapVisualization(dataD){
+    google.charts.load('current', {
+       'packages': ['geochart'],
+       // Note: Because markers require geocoding, you'll need a mapsApiKey.
+       // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+       'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
+     });
+     google.charts.setOnLoadCallback(drawMarkersMap);
+
+      function drawMarkersMap() {
+        let temp = [['Lat', 'Long', 'Name']]
+        dataD.forEach((item)=>{
+          temp.push([item.lat , item.lon , item.name])
+        })
+      var data = google.visualization.arrayToDataTable(temp);
+
+      var options = {
+        region: 'CA',
+        displayMode: 'markers',
+        colorAxis: {colors: ['green', 'blue']}
+      };
+
+      var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    };
+  }
+  function dataTablePresentation(dataD){
+    $('#dataTable').DataTable({
+            data: dataD,
+            columns: [
+                { data: 'lat' },
+                { data: 'lon' },
+                { data: 'name' },
+                { data: 'poi_id' }
+            ]
+     });
+  }
+    
+function visualPresentation(dataD){
+    let date = [];
+    let dataSet = [];
+    dataD.forEach(item =>{     
+       date.push((new Date(item.date)).toDateString())
+      dataSet.push(item.events)
+    })
+const data = {
+  labels: date,
+  datasets: [{
+    label: 'Number of event',
+    data: dataSet,
+    fill: false,
+    borderColor: 'rgb(75, 192, 192)',
+    tension: 0.1
+  }]
+};
+      const config = {
+    type: 'line',
+    data: data,
+    options: {}
+  };
+           const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+          );
+
+}
+</script>
+  
+</body>
+</html>
