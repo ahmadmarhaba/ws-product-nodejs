@@ -46,4 +46,4 @@ jobs:
         with:
           node-version: 14.x
 
-      - run: npx @eqworks/scan-env --strict
+      - run: npx @eqworks/scan-env
