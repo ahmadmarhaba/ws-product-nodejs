@@ -1,13 +1,48 @@
-ws-product-nodejs project
+# ws-product-nodejs project
 
-Docker image created on my docker account
-docker push ahmadmarhaba/nodejs-demo:tagname
+## For Docker image
 
-My github profile
-https://github.com/ahmadmarhaba
+    docker pull ahmadmarhaba/nodejs-demo
 
-Sample project github
-https://github.com/ahmadmarhaba/ws-product-nodejs
+## My github profile
 
-Github actions results
-https://github.com/ahmadmarhaba/ws-product-nodejs/actions/runs/2683392038
+    https://github.com/ahmadmarhaba
+
+## Sample project github
+
+    https://github.com/ahmadmarhaba/ws-product-nodejs
+
+## Github actions results
+
+    https://github.com/ahmadmarhaba/ws-product-nodejs/actions/runs/2683392038
+
+## For Terraform kubernetes commands
+
+    terraform init
+    terraform plan
+    terraform apply
+
+    kubectl get ns k8s-ns-by-tf
+    kubectl get deployment -n k8s-ns-by-tf
+    kubectl get pods -n k8s-ns-by-tf
+
+    terraform destroy
+
+## For performance
+    
+    Folder: Performance
+
+        File: Test Plan, file-type: jmeter
+        File: Data, file-type: performance monitor
+
+        File: Thread Group, file-type: png
+
+        File: Aggregate Report, file-type: png
+        File: Summary Report, file-type: png
+        File: View Results Tree, file-type: png
+
+
+
+
+
+

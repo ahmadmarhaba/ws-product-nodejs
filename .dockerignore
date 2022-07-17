@@ -1,4 +1,5 @@
 node_modules
+Performance
 npm-debug.log
 # ignore .git and .cache folders
 .git
