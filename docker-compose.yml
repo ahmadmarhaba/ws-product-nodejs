@@ -7,11 +7,6 @@ services:
       - '5555:5555'
   db:
     image: 'postgres'
-    # ports:
-    #   - '5432:5432'
-    # environment:
-    #   POSTGRES_PASSWORD: 'w2UIO@#bg532!'
-    #   POSTGRES_USER: 'readonly'
     volumes:
       - hostDir:/var/lib/postgresql/data
 volumes:
