@@ -40,7 +40,15 @@
         File: Aggregate Report, file-type: png
         File: Summary Report, file-type: png
         File: View Results Tree, file-type: png
+    
+    Summary: Identifying Performance Bottlenecks lists hardware classes according to relative access speed, implying that slow access points, such as disks, are more likely to be the source of bottlenecks. However, processors that are underpowered to handle large loads are also likely sources of bottlenecks.
 
+    Tuning/scaling suggestions:
+
+    - Make each REST resource is a small entity. Don't read data from join of many tables.
+    - Read data from near by databases
+    - Use caches (Redis) instead of databases(You can save DISK I/O)
+    - Always keep data sources as much as near by because these blocks will make server resources (CPU) ideal and it no other request can use that resource while it is ideal.
 
 
 
