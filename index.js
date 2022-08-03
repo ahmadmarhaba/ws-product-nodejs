@@ -1,22 +1,22 @@
 require('dotenv').config()
 const express = require('express')
 const { Pool } = require('pg')
+// const rateCheck = require('./ratelimiter')
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-// configs come from standard PostgreSQL env vars
-// https://www.postgresql.org/docs/9.6/static/libpq-envars.html
+// app.use(rateCheck)
 const pool = new Pool({
   host: process.env.PGHOST,// <ignore scan-env>
   user: process.env.PGUSER,// <ignore scan-env>
   database : process.env.PGDATABASE,// <ignore scan-env>
   password : process.env.PGPASSWORD,// <ignore scan-env>
   port : process.env.PGPORT,// <ignore scan-env>
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 2000,
-  allowExitOnIdle : true
+  // idleTimeoutMillis: 30000,
+  // connectionTimeoutMillis: 2000,
+  // allowExitOnIdle : true
 })
-const queryHandler = (req, res, next) => {
+const queryHandler = async (req, res, next) => {
   pool.query(req.sqlQuery).then((r) => {
     // console.log(r.rows)
     return res.json(r.rows || [])
@@ -24,7 +24,7 @@ const queryHandler = (req, res, next) => {
 }
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/main.html'); 
+  res.send("Server works"); 
 })
 
 app.get('/events/hourly', (req, res, next) => {
@@ -98,3 +98,5 @@ process.on('unhandledRejection', (reason, p) => {
   console.log('Unhandled Rejection at: Promise', p, 'reason:', reason)
   process.exit(1)
 })
+
+
