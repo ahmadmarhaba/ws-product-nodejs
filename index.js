@@ -1,11 +1,11 @@
 require('dotenv').config()
 const express = require('express')
 const { Pool } = require('pg')
-// const rateCheck = require('./ratelimiter')
+const redis = require('./redis');
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-// app.use(rateCheck)
+
 const pool = new Pool({
   host: process.env.PGHOST,// <ignore scan-env>
   user: process.env.PGUSER,// <ignore scan-env>
@@ -17,10 +17,25 @@ const pool = new Pool({
   // allowExitOnIdle : true
 })
 const queryHandler = async (req, res, next) => {
-  pool.query(req.sqlQuery).then((r) => {
-    // console.log(r.rows)
-    return res.json(r.rows || [])
-  }).catch(next)
+  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+  const requests = await redis.incr(ip);
+  console.log(`Number of requests made so far ${requests}`);
+  if (requests === 1) {
+    await redis.expire(ip, 60);
+  }
+  if (requests > 5) {
+    res.status(503)
+      .json({
+        response: 'Error',
+        callsMade: requests,
+        msg: 'Too many calls made'
+      });
+  } else{
+    pool.query(req.sqlQuery).then((r) => {
+      // console.log(r.rows)
+      return res.json(r.rows || [])
+    }).catch(next)
+  }  
 }
 
 app.get('/', (req, res) => {
