@@ -44,7 +44,7 @@ const queryHandler = async (req, res, next) => {
   if (requests === 1) {
     await redis.expire(ip, 60);
   }
-  if (requests > 5) {
+  if (requests > 25) {
     res.status(503)
       .json({
         response: 'Error',
