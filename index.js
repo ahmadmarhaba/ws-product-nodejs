@@ -16,13 +16,6 @@ const pool = new Pool({
   // connectionTimeoutMillis: 2000,
   // allowExitOnIdle : true
 })
-console.log({
-  host: process.env.PGHOST,// <ignore scan-env>
-  user: process.env.PGUSER,// <ignore scan-env>
-  database : process.env.PGDATABASE,// <ignore scan-env>
-  password : process.env.PGPASSWORD,// <ignore scan-env>
-  port : process.env.PGPORT,// <ignore scan-env>
-})
 // Add headers before the routes are defined
 app.use(function (req, res, next) {
 
