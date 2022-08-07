@@ -55,8 +55,9 @@ const queryHandler = async (req, res, next) => {
       });
       console.log(3)
   } else{
+    console.log(4)
     pool.query(req.sqlQuery).then((r) => {
-      console.log(4)
+      console.log(5)
       return res.json(r.rows || [])
     }).catch(next)
   }  
