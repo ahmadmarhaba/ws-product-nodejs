@@ -48,7 +48,7 @@ const queryHandler = async (req, res, next) => {
       .json({
         response: 'Error',
         callsMade: requests,
-        msg: 'Too many calls made'
+        msg: 'Too many calls been made'
       });
   } else{
     pool.query(req.sqlQuery).then((r) => {
