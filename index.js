@@ -42,7 +42,9 @@ const queryHandler = async (req, res, next) => {
   const requests = await redis.incr(ip);
   console.log(`Number of requests made so far ${requests}`);
   if (requests === 1) {
+    console.log(1)
     await redis.expire(ip, 60);
+    console.log(2)
   }
   if (requests > 25) {
     res.status(503)
@@ -51,8 +53,10 @@ const queryHandler = async (req, res, next) => {
         callsMade: requests,
         msg: 'Too many calls made'
       });
+      console.log(3)
   } else{
     pool.query(req.sqlQuery).then((r) => {
+      console.log(4)
       return res.json(r.rows || [])
     }).catch(next)
   }  
