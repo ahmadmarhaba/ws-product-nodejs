@@ -38,7 +38,7 @@ app.use(function (req, res, next) {
 });
 
 const queryHandler = async (req, res, next) => {
-  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+  // const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
   // const requests = await redis.incr(ip);
   // console.log(`Number of requests made so far ${requests}`);
   // if (requests === 1) {
@@ -55,9 +55,9 @@ const queryHandler = async (req, res, next) => {
   //     });
   //     console.log(3)
   // } else{
-    console.log(4)
+    console.log(1,req.sqlQuery)
     pool.query(req.sqlQuery).then((r) => {
-      console.log(5)
+      console.log(2)
       return res.json(r.rows || [])
     }).catch(next)
   // }  
