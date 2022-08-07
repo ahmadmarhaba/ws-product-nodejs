@@ -39,28 +39,28 @@ app.use(function (req, res, next) {
 
 const queryHandler = async (req, res, next) => {
   const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-  const requests = await redis.incr(ip);
-  console.log(`Number of requests made so far ${requests}`);
-  if (requests === 1) {
-    console.log(1)
-    await redis.expire(ip, 60);
-    console.log(2)
-  }
-  if (requests > 25) {
-    res.status(503)
-      .json({
-        response: 'Error',
-        callsMade: requests,
-        msg: 'Too many calls made'
-      });
-      console.log(3)
-  } else{
+  // const requests = await redis.incr(ip);
+  // console.log(`Number of requests made so far ${requests}`);
+  // if (requests === 1) {
+  //   console.log(1)
+  //   await redis.expire(ip, 60);
+  //   console.log(2)
+  // }
+  // if (requests > 25) {
+  //   res.status(503)
+  //     .json({
+  //       response: 'Error',
+  //       callsMade: requests,
+  //       msg: 'Too many calls made'
+  //     });
+  //     console.log(3)
+  // } else{
     console.log(4)
     pool.query(req.sqlQuery).then((r) => {
       console.log(5)
       return res.json(r.rows || [])
     }).catch(next)
-  }  
+  // }  
 }
 
 app.get('/', (req, res) => {
@@ -112,7 +112,7 @@ app.get('/stats/daily', (req, res, next) => {
   return next()
 }, queryHandler)
 
-app.get('/poi', (req, res, next) => {
+app.get('/poi', async (req, res, next) => {
   req.sqlQuery = `
     SELECT *
     FROM public.poi;
